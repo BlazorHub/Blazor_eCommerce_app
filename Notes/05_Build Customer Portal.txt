@@ -1,0 +1,298 @@
+﻿41. Reorganize Projects for Clean Architecture
+
+-> eshop.Web.Models -> eShop.Web.AdminPortal												
+					-> eShop.Web.Common
+					-> eShop.Web.CustomerPortal :	Control -> ProductItemComp.razor
+													Pages	-> SearchProductsComp.razor
+															-> ViewProductComponent.razor	
+
+-> Plugins			-> eShop.DataStore
+
+-> eShop.CoreBusiness
+
+-> eShop.UseCases	-> PluginInterfaces
+						-> IProductRepository.cs
+						
+					-> SearchProdutScreen
+						-> ISearchProductUseCases.cs
+						-> SearchProductUseCases.cs
+
+					-> ViewProductScreen
+						-> IViewProductUseCases.cs
+						-> ViewProductUseCases.cs
+
+-> eShop.Web
+
+-- eShop.Web -> App.razor --
+
+AdditionalAssemblies="new[] { typeof(eShop.Web.CustomerPortal.Pages.ViewProductComp).Assembly }"
+
+
+42. Order Entity and Business Rules
+
+-- eShop.CoreBusiness -> Models --
+
+Order.cs		: OrderID, DatePlaced, DateProcessing, DateProcessed, CustomerName, CustomerAddress, 
+				  CustomerCity, CustomerStateProvince, CustomerCountry, AdminUser, 
+			      List<OrderLineItem> LineItems, UniqueId
+
+Product.cs		: LineItemId, ProductId, Price, Quantity, OrderId, Product
+
+IOrderService.cs: bool ValidateCustomerInformation(string name, string address, string city, string provice, string cvountry)
+				  bool ValidateCreateOrder(Order order)
+				  bool ValidateUpdateOrder(Order order)
+OrderService.cs	:
+
+OrderLineItem.cs: 	
+
+
+43. Shopping Cart Abstraction
+
+-- eShop.UseCases -> PluginIntefaces -> UI -> IShoppingCard.cs --
+
+Task<Order> GetOrderAsync();
+Task<Order> AddProductAsync();
+Task<Order> UpdateQuantityAsync(int productId, int quantity);
+Task<Order> UpdateOrderAsync(Order order);
+Task<Order> DeleteProductAsync(int productId);
+Task<Order> PlaceOrderAsync();
+Task EmptyAsync();
+
+
+44. Add Product to Shopping Cart Use Case
+
+-- eShop.UseCases -> PluginIntefaces -> ViewProductSceen --
+
+-> get the product
+-> add the product to the shopingCard
+
+AddProductToCardUseCase.cs	:	ctor(IProductRepository productRepository, IShoppingCard shoppingCard)	
+								Execute(int productId) 
+								{
+									var product = _productRepository.GetProduct(productId);
+									await _shoppingCard.AddProductAsync(product);
+								}
+
+IAddProductToCardUseCase.cs:  Execute(int productId) 
+
+-- ViewProductComp.razor --
+
+@inject NavigationManager navManager
+@inject IViewProductUseCase viewProduct
+@inject IAddProductToCardUseCase addProductToCard
+
+UI:
+-> create a "AddToCard" button
+
+@code:
+-> add product to card
+-> navigate to the CatalogPage
+
+
+45. Implementing Shopping Cart Plugin
+
+-> use the local storage of the browser to display the data
+
+-- Plugins -> eShop.ShoppingCard.LocalStorage -> ShoppingCard.cs--
+
+-> add reference: eShop.UseCases
+
+
+-- ShoppingCard.cs --
+
+-> access LocalStorage to get and save the Order in our ShoppingCard
+-> inject JS runtime intro ctor
+-> getting and setting the Order into LocalStorage
+
+SetOrder():
+-> await _jSRuntime.InvokeVoidAsync("localStorage.setItem",
+                                     cstrShoppingCard,
+                                     JsonConvert.SerializeObject(order));
+
+GetOrder():
+{
+	Order order = null;
+
+	var strOrder = await _jSRuntime.InvokeAsync<string>("localStorage.getItem", cstrShoppingCard);
+	if (!string.IsNullOrWhiteSpace(strOrder))
+		order = JsonConvert.DeserializeObject<Order>(strOrder);
+	else
+	{
+		order = new Order();
+		await SetOrder(order);
+	}
+
+	foreach(var item in order.LineItems)
+	{
+		item.Product = _productRepository.GetProduct(item.ProductId);
+	}
+
+	return order;
+}
+
+
+46. Test Add Product to Cart Use Case
+
+-- eShop.Web -> StartUp.cs --
+
+services.AddScoped<IShoppingCard, eShop.ShoppingCard.LocalStorage.ShoppingCard>();
+services.AddTransient<IAddProductToCardUseCase, AddProductToCardUseCase>();
+
+
+47. Improve UI Layout
+
+https://getbootstrap.com/docs/4.0/components/navbar/
+
+-- eShop.Web -> Shared -> TopNavBar.razor --
+-> put the TopNavBar.razor into MainLayout.razor
+
+
+-- eShop.Web -> Pages : --
+-> delete: Index.razor, Counter.razor, FetchData.razor
+
+
+-- eShop.Web.CustomerPortal-> Controls -> ProductCardComp.razor --
+
+UI:
+https://getbootstrap.com/docs/4.0/components/card/
+
+@code:
+[Parameter]
+public Product Product{get;set;}
+
+-- eShop.Web.CustomerPortal -> Pages -> SearchProductComp.razor --
+-> delete the table
+-> use the ProductCardComponent to display the prducts
+
+
+48. View Shopping Cart Use Case
+
+-- ShopingCardScreen -> ViewShoppingCardUseCase.cs --
+
+-> ctor(IShoppingCard shoppingCard)
+-> Execute() : 
+	return shoppingCard.GetOrderAsync();
+
+
+49. View Shopping Cart Component
+
+-> Shopping Card is implemented with localstorage, and localstorage is implementing JS interupt
+-> JS interupt can't be used with OnInitialized() because in Blazor Server is triggered twice
+-> we use AfterRendered()
+
+UI:
+@inject IViewShoppingCardUseCase viewShoppingCardUseCase
+
+@code{
+	private Order order;
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            order = await viewShoppingCardUseCase.Execute();
+            StateHasChanged();
+        }
+    }
+}
+
+StateHasChanged():  Notifies the component that its state has changed. 
+					When applicable, this will cause the component to be re-rendered.
+
+
+50. Order Line Item Component
+
+UI:
+-> check if the product is LineItem & LineItem.Product is not null
+-> create a <li> with class row with 3 class colums
+	-> Col 1 :  -> <img src="@LineItem.Product.ImageLink"/>
+	-> Col 2 :	-> @LineItem.Product.Name
+				-> @LineItem.Quantity
+				-> @LineItem.Product.Price.ToString("c");				
+	-> Col 3 :	-> <button @onclick="@(()=> DeleteProduct(LineItem.ProductId))">
+
+@code:
+[Parameter]
+public OrderLineItem LineItem
+
+void HandleQuantityChange()
+void DeleteProduct(int productId)
+
+
+51. Order Summary Component
+
+UI:
+
+-> create 4 <div> : -> nr of items				and price: @itemsCount, @itemsTotalPrice.ToString("c")			
+					-> shipping and handling	and price: 
+					-> estimated tax			and price:
+					-> order total				and price: @itemsTotalPrice.ToString("c")
+
+-> create button  : -> @onclick="PlaceOrder"
+
+@code
+int itemsCount = 0;
+double itemsTotalPrice = 0;
+
+[Parameter]
+public Order Order { get; set; }
+
+OnParametersSet()	: -> if Order is not null
+						-> get the nr of products
+						-> reset the total price
+						-> get the total price with the new number of items
+
+PlaceOrder()		: 
+
+
+52. Shopping Card State Management
+
+INTERFACES
+
+-> save the Sate of a Component outside of the Parent/Child component
+-> use the flex arhitecture
+
+-- eShop.UseCases-> PluginIterfaces -> StateStore --
+
+-- IStateStore.cs --
+void AddStateChangeListeners(Action listener)
+void RemoveStateChangeListeners(Action listener)
+void BroadCastStateChange(Action listener)
+
+-- IShoppingCardStateStore.cs : IStateStore --
+Task<int> GetItemsCount()
+void UpdateLineItemsCount()
+
+
+-- eShop.UseCases-> ViewProductScreen-> AddProductToCardUseCases.cs --
+
+-> add IShoppingCardStateStore to ctor
+-> Execute()
+	-> add shoppingCardStateStore.UpdateLineItemsCount();
+
+
+IMPLEMENTATION (5:00)
+-- Plugins -> eShop.StateStore.DI --
+
+-- StateStore.cs : IStateStore --
+void AddStateChangeListeners(Action listener)
+void RemoveStateChangeListeners(Action listener)
+void BroadCastStateChange(Action listener)
+
+
+-- ShoppingCardStateStore.cs  : StateStoreBase, IShoppingCardStateStore --
+
+-> ctor(IShoppingCard shoppingCard)
+-> async Task<int> GetItmesCount()
+	-> get the Order: GetOrderAsync();
+	-> check if the order, oderline is null, orderline.count > 0
+-> UpdateLineItemsCount()
+	-> BroadCastStateChange();
+
+
+-- eShop.Web -> Starup.cs --
+
+services.AddScoped<IShoppingCardStateStore, ShoppingCardStateStore>();
+
+
+53. Shopping Cart Items Count Component
