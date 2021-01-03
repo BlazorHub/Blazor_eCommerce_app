@@ -296,3 +296,28 @@ services.AddScoped<IShoppingCardStateStore, ShoppingCardStateStore>();
 
 
 53. Shopping Cart Items Count Component
+
+-- eShop.Web.CustomerPortal -> Control -> CardComp.razor--
+
+UI:
+@implements IDisposable
+@inject IShoppingCardStateStore shoppingCardStateStore
+
+Card: @lineItemsCount
+
+@code
+-> create a prop that contains the nr of items
+-> OnAfterRenderAsync()
+	-> AddStateChangeListeners(HandleShoppingCardStateChange); 
+	-> GetItmesCount();
+	-> StateHasChanged();
+-> HandleShoppingCardStateChange()
+	-> GetItmesCount();
+	-> StateHasChanged();
+-> Dispose()
+	-> RemoveStateChangeListeners(HandleShoppingCardStateChange);
+
+-- eShop.Web -> Shared -> TopNavBar.razor --
+-> add a <NavLink> with href="card" 
+	-> add <CardComp/>
+	
