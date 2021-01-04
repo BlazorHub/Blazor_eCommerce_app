@@ -36,19 +36,27 @@ Order.cs		: OrderID, DatePlaced, DateProcessing, DateProcessed, CustomerName, Cu
 				  CustomerCity, CustomerStateProvince, CustomerCountry, AdminUser, 
 			      List<OrderLineItem> LineItems, UniqueId
 
+				  -> void AddProduct(int productId, int qty, double price)
+				  -> void RemoveProduct(int productId)
+
+
 Product.cs		: LineItemId, ProductId, Price, Quantity, OrderId, Product
 
 IOrderService.cs: bool ValidateCustomerInformation(string name, string address, string city, string provice, string cvountry)
 				  bool ValidateCreateOrder(Order order)
 				  bool ValidateUpdateOrder(Order order)
-OrderService.cs	:
 
-OrderLineItem.cs: 	
+OrderService.cs	: 
+
+OrderLineItem.cs: LineItemId, ProductId, Price, Quantity, OrderId, Product
 
 
 43. Shopping Cart Abstraction
 
 -- eShop.UseCases -> PluginIntefaces -> UI -> IShoppingCard.cs --
+
+-> we make it Async because we will use JSRuntime, which is a async 
+-> get, add, update, delete order/product from/to LocalStorage
 
 Task<Order> GetOrderAsync();
 Task<Order> AddProductAsync();
@@ -59,12 +67,12 @@ Task<Order> PlaceOrderAsync();
 Task EmptyAsync();
 
 
-44. Add Product to Shopping Cart Use Case
+44. Add Product to Shopping Card UseCases
 
--- eShop.UseCases -> PluginIntefaces -> ViewProductSceen --
+-- eShop.UseCases -> ViewProductSceen --
 
 -> get the product
--> add the product to the shopingCard
+-> add the product to the shoppingCard
 
 AddProductToCardUseCase.cs	:	ctor(IProductRepository productRepository, IShoppingCard shoppingCard)	
 								Execute(int productId) 

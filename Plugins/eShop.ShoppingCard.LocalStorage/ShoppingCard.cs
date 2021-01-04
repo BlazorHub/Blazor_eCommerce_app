@@ -85,6 +85,7 @@ namespace eShop.ShoppingCard.LocalStorage
         {
             Order order;
 
+            // InvokeAsync : An instance of TValue obtained by JSON-deserializing the return value.
             var strOrder = await _jSRuntime.InvokeAsync<string>("localStorage.getItem", cstrShoppingCard);
             if (!string.IsNullOrWhiteSpace(strOrder) && strOrder.ToLower() != "null")
                 order = JsonConvert.DeserializeObject<Order>(strOrder);
