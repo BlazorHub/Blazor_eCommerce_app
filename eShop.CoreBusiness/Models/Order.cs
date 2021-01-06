@@ -20,8 +20,8 @@ namespace eShop.CoreBusiness.Models
         public string CustomerCity { get; set; }
         public string CustomerStateProvince { get; set; }
         public string CustomerCountry { get; set; }
-        public string AdminUser { get; set; }
-        public List<OrderLineItem> LineItems { get; set; }
+        public string AdminUser { get; set; }       
+        public List<OrderLineItem> LineItems { get; set; } // each line Item will have a product in it
         public string UniqueId { get; set; }
 
         public void AddProduct(int productId, int qty, double price)

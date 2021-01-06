@@ -36,6 +36,8 @@ Order.cs		: OrderID, DatePlaced, DateProcessing, DateProcessed, CustomerName, Cu
 				  CustomerCity, CustomerStateProvince, CustomerCountry, AdminUser, 
 			      List<OrderLineItem> LineItems, UniqueId
 
+				  List<OrderLineItem> LineItems : each LineItems has a item in it
+
 				  -> void AddProduct(int productId, int qty, double price)
 				  -> void RemoveProduct(int productId)
 

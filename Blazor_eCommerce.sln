@@ -24,11 +24,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Notes", "_Notes", "{79EDB32E-8133-4412-B11C-65841FB476D5}"
 	ProjectSection(SolutionItems) = preProject
 		Notes\05_Build Customer Portal.txt = Notes\05_Build Customer Portal.txt
+		TypeOfArhitecture.txt = TypeOfArhitecture.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.ShoppingCard.LocalStorage", "Plugins\eShop.ShoppingCard.LocalStorage\eShop.ShoppingCard.LocalStorage.csproj", "{8D87A09A-56DE-4708-B08D-1B8A6B38BFAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShop.StateStore.DI", "Plugins\eShop.StateStore.DI\eShop.StateStore.DI.csproj", "{D1EC8EED-1E51-447A-AA56-8D985968B6B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.StateStore.DI", "Plugins\eShop.StateStore.DI\eShop.StateStore.DI.csproj", "{D1EC8EED-1E51-447A-AA56-8D985968B6B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
