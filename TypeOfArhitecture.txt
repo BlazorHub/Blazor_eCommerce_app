@@ -5,7 +5,7 @@ https://www.youtube.com/watch?v=dK4Yb6-LxAk&t=497s&ab_channel=GOTOConferences
 
 2. Clean arhitecture
 Domain layer		: enterprise logic and types (is specific to this system)
-Application layer	: business logic and types	(many systems)
+Application layer	: business logic and types	 (many systems)
 Core Layer			: Presentation
 					  Infrastructure
 
@@ -35,7 +35,7 @@ I. Domain Layer
 [StringLength(4000)]
 public string Note { get; set;}
 
--> in a try/catch block , for better debugging, we need to create our own Exception
+-> in a try/catch block, for better debugging, we need to create our own Exception
 
 try{
 	...
@@ -48,10 +48,18 @@ catch(Exception e)
 
 Key Points:
 -> avoid using data annotations in the DOMAIN MODEL
--> use value objects where appropriate  : https://www.youtube.com/watch?v=OIZ-ROcMmI8&ab_channel=CodingConcepts
--> create custom domain exceptions		: custom try/catch exception  
+
+ https://www.youtube.com/watch?v=OIZ-ROcMmI8&ab_channel=CodingConcepts
+-> use value objects where appropriate  : -> (1:00) measures, quantifies, describes something in your domain 
+										  -> (2:30) they are immutable (https://www.youtube.com/watch?v=D1LkYP8MYzQ&ab_channel=.NETInterviewPreparationvideos)
+										  -> (3:43) maintain referential identity, but lack their own identity
+										  -> (5:10) side effect free functions
+
+-> create custom domain exceptions		: custom try/catch exception 
+
 -> initialise all collections(at the constructor level) & use private setters :	
-			 LineItems = new List<OrderLineItem>();								
+			 LineItems = new List<OrderLineItem>();		
+			 
 -> automatically track changes 
 
 
@@ -66,10 +74,10 @@ II. Application Layer
 -> Exceptions 
 
 CQRS(Command Query Reponsibility Segregation)
-Separate reads(queries) from writes(commands)
-Can maximise performance, scalability and simplicity
-Easy to add new features, just add a new query or command
-Easy to maintain, changes only affect one command or query
+-> Separate reads(queries) from writes(commands)
+-> Can maximise performance, scalability and simplicity
+-> Easy to add new features, just add a new query or command
+-> Easy to maintain, changes only affect one command or query
 
 CQRS + MediatR(library)
 -> define commands and queries as requests
@@ -77,7 +85,7 @@ CQRS + MediatR(library)
 -> ability to attach additional behaviour before and/or after each request, logging, validation, caching, authorisation...
 	ex: if we want to validate a request that comes and go, we can do that 
 
--> create a static class that have all the DependencyInjection, so that the Startup.cs will not get bigger
+-> create a static class that have all the Dependency Injection, so that the Startup.cs will not get bigger
 
 public static class DependencyInjection
 {
