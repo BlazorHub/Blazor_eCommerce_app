@@ -33,7 +33,6 @@ namespace eShop.CoreBusiness.Models
             }
             else
                 LineItems.Add(new OrderLineItem { ProductId = productId, Quantity = qty, Price = price });
-
         }
 
         public void RemoveProduct(int productId)
@@ -41,16 +40,6 @@ namespace eShop.CoreBusiness.Models
             var item = LineItems.FirstOrDefault(x => x.ProductId == productId);
             if (item != null)
                 LineItems.Remove(item);
-
-            //foreach(var item in LineItems)
-            //{
-            //    if(item.ProductId == productId)
-            //    {
-            //        LineItems.Remove(item);
-            //        break;
-            //    }
-            //}
-        }
-        
+        }        
     }
 }

@@ -11,8 +11,8 @@ Core Layer			: Presentation
 
 -> Core Layer doesn't depend on anything, adding abstraction/interfaces within the Application Layer
 
-ex(1:20): if we want to implement a Repository Pattern, we add IRepository in the "Application", and an implementation 
-		  in the "Infrastructure"
+ex(1:20): if we want to implement a Repository Pattern, we add IRepository in the "Application", 
+		  and an implementation in the "Infrastructure"
 
 Advantages:
 -> testable
@@ -25,7 +25,7 @@ Clean Architecture Template : https://github.com/jasontaylordev/CleanArchitectur
 
 I. Domain Layer
 -> Entities			: a row in a database (https://binaryterms.com/difference-between-entity-and-attribute-in-database.html)
--> Value Objects	: 
+-> Value Objects	 
 -> Enumerations
 -> Logic
 -> Exceptions
