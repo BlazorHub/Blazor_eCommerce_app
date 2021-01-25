@@ -1,31 +1,59 @@
 ﻿41. Reorganize Projects for Clean Architecture
 
--> eshop.Web.Models -> eShop.Web.AdminPortal												
-					-> eShop.Web.Common
-					-> eShop.Web.CustomerPortal :	Control -> ProductItemComp.razor
-													Pages	-> SearchProductsComp.razor
-															-> ViewProductComponent.razor	
+-> eShop.Web.Models		-> eShop.Web.AdminPortal
+						-> eShop.Web.Common
+						-> eShop.Web.CustomerPortal		-> Controls		-> CardComp.razor
+																		-> LineItemComp.razor
+																		-> OrderSummaryComp.razor
+																		-> ProductCardComp.razor
+																		-> ProductItemComp.razor
+																
+														-> Pages		-> SearchBarComp.razor
+																		-> SearchProductComp.razor
+																		-> ShoppingCardComp.razor
+																		-> ViewProductComp.razor
+	
+-> Plugins				-> eShop.DataStore								-> ProductRepository.cs
+						-> eShop.ShoppingCard.LocalStorage				-> ShoppingCard.cs		
+						-> eShop.StateStore.DI							-> ShoppingCardStateStore.cs
+																		-> StateStoreBase.cs
 
--> Plugins			-> eShop.DataStore
+-> eShop.CoreBusiness	-> Models										-> Order.cs
+																		-> OrderLineItems.cs
+																		-> Product.cs
+							
+						-> Services										-> IOrderService.cs
+																		-> OrderService.cs
+							
+-> eShop.UseCases		-> PluginInterfaces				-> DataStore	-> IProductRepository.cs
 
--> eShop.CoreBusiness
+														-> StateStore	-> IShoppingCardStateStore.cs
+																		-> IStateStore.cs
 
--> eShop.UseCases	-> PluginInterfaces
-						-> IProductRepository.cs
-						
-					-> SearchProdutScreen
-						-> ISearchProductUseCases.cs
-						-> SearchProductUseCases.cs
+														-> UI			-> IShoppingCard.cs
 
-					-> ViewProductScreen
-						-> IViewProductUseCases.cs
-						-> ViewProductUseCases.cs
+						-> SearchProductScreen							-> ISearchProductUseCases.cs 
+																		-> SearchProductUseCase.cs
+							
+						-> ShoppingCardScreen							-> IViewShoppingCardUseCase.cs
+																		-> ViewShoppingCardUseCase.cs
+
+						-> ViewProductScreen			-> Interfaces	-> IAddProductToCardUseCase.cs
+																		-> IViewProductUseCase.cs
+
+																		-> AddProductToCardUseCase.cs
+																		-> ViewProductUseCase.cs
 
 -> eShop.Web
+
+
 
 -- eShop.Web -> App.razor --
 
 AdditionalAssemblies="new[] { typeof(eShop.Web.CustomerPortal.Pages.ViewProductComp).Assembly }"
+
+-> add aditional Assembly to be seen in the eShop.Project
+
 
 
 42. Order Entity and Business Rules
@@ -101,6 +129,8 @@ UI:
 
 45. Implementing Shopping Cart Plugin
 
+IJSRuntime: -> calling C# from JS
+
 -> use the local storage of the browser to display the data
 
 -- Plugins -> eShop.ShoppingCard.LocalStorage -> ShoppingCard.cs--
@@ -113,6 +143,13 @@ UI:
 -> access LocalStorage to get and save the Order in our ShoppingCard
 -> inject JS runtime intro ctor
 -> getting and setting the Order into LocalStorage
+
+
+public static ValueTask InvokeVoidAsync(this IJSRuntime jsRuntime, string identifier, params object[] args);
+
+string identifier = "localStorage.setItem"
+params object[] args = cstrShoppingCard, JsonConvert.SerializeObject(order)
+
 
 SetOrder():
 -> await _jSRuntime.InvokeVoidAsync("localStorage.setItem",

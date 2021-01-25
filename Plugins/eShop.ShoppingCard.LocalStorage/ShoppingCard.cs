@@ -105,6 +105,8 @@ namespace eShop.ShoppingCard.LocalStorage
 
         private async Task SetOrder(Order order)
         {
+            // InvokeVoidAsync(this IJSRuntime jsRuntime, string identifier, params object[] args);
+
             await _jSRuntime.InvokeVoidAsync("localStorage.setItem",
                                              cstrShoppingCard,
                                              JsonConvert.SerializeObject(order));
