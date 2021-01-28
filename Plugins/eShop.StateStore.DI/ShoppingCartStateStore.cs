@@ -4,18 +4,18 @@ using System.Threading.Tasks;
 
 namespace eShop.StateStore.DI
 {
-    public class ShoppingCardStateStore : StateStoreBase, IShoppingCardStateStore
+    public class ShoppingCartStateStore : StateStoreBase, IShoppingCartStateStore
     {
-        private readonly IShoppingCard _shoppingCard;
+        private readonly IShoppingCart _shoppingCart;
 
-        public ShoppingCardStateStore(IShoppingCard shoppingCard)
+        public ShoppingCartStateStore(IShoppingCart shoppingCard)
         {
-            _shoppingCard = shoppingCard;
+            _shoppingCart = shoppingCard;
         }
 
         public async Task<int> GetItmesCount()
         {
-            var order = await _shoppingCard.GetOrderAsync();
+            var order = await _shoppingCart.GetOrderAsync();
             if (order != null && order.LineItems != null && order.LineItems.Count > 0)
                 return order.LineItems.Count;
 

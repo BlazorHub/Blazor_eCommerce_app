@@ -1,9 +1,9 @@
 ﻿using eShop.CoreBusiness.Models;
 using System.Threading.Tasks;
 
-namespace eShop.UseCases.ShoppingCardScreen
+namespace eShop.UseCases.ShoppingCartScreen
 {
-    public interface IViewShoppingCardUseCase
+    public interface IViewShoppingCartUseCase
     {
         Task<Order> Execute();
     }

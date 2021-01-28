@@ -4,7 +4,7 @@ using eShop.UseCases.PluginInterfaces.DataStore;
 using eShop.UseCases.PluginInterfaces.StateStore;
 using eShop.UseCases.PluginInterfaces.UI;
 using eShop.UseCases.SearchProductScreen;
-using eShop.UseCases.ShoppingCardScreen;
+using eShop.UseCases.ShoppingCartScreen;
 using eShop.UseCases.ViewProductScreen;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,13 +32,13 @@ namespace eShop.Web
 
             services.AddSingleton<IProductRepository, ProductRepository>();
 
-            services.AddScoped<IShoppingCard, eShop.ShoppingCard.LocalStorage.ShoppingCard>();
-            services.AddScoped<IShoppingCardStateStore, ShoppingCardStateStore>();
+            services.AddScoped<IShoppingCart, eShop.ShoppingCard.LocalStorage.ShoppingCart>();
+            services.AddScoped<IShoppingCartStateStore, ShoppingCartStateStore>();
 
             services.AddTransient<IViewProductUseCase, ViewProductUseCase>();
             services.AddTransient<ISearchProductUseCase, SearchProductUseCase>();
-            services.AddTransient<IAddProductToCardUseCase, AddProductToCardUseCase>();
-            services.AddTransient<IViewShoppingCardUseCase, ViewShoppingCardUseCase>();   
+            services.AddTransient<IAddProductToCartUseCase, AddProductToCartUseCase>();
+            services.AddTransient<IViewShoppingCartUseCase, ViewShoppingCartUseCase>();   
             
         }
 

@@ -2,7 +2,7 @@
 
 namespace eShop.UseCases.PluginInterfaces.StateStore
 {
-    public interface IShoppingCardStateStore : IStateStore
+    public interface IShoppingCartStateStore : IStateStore
     {
         Task<int> GetItmesCount();
 

@@ -72,7 +72,7 @@ Order.cs		: OrderID, DatePlaced, DateProcessing, DateProcessed, CustomerName, Cu
 
 Product.cs		: LineItemId, ProductId, Price, Quantity, OrderId, Product
 
-IOrderService.cs: bool ValidateCustomerInformation(string name, string address, string city, string provice, string cvountry)
+IOrderService.cs: bool ValidateCustomerInformation(string name, string address, string city, string provice, string country)
 				  bool ValidateCreateOrder(Order order)
 				  bool ValidateUpdateOrder(Order order)
 
@@ -85,7 +85,7 @@ OrderLineItem.cs: LineItemId, ProductId, Price, Quantity, OrderId, Product
 
 -- eShop.UseCases -> PluginIntefaces -> UI -> IShoppingCard.cs --
 
--> we make it Async because we will use JSRuntime, which is a async 
+-> we make it Async because we use JSRuntime, which is a async 
 -> get, add, update, delete order/product from/to LocalStorage
 
 Task<Order> GetOrderAsync();
@@ -156,26 +156,15 @@ SetOrder():
                                      cstrShoppingCard,
                                      JsonConvert.SerializeObject(order));
 
-GetOrder():
-{
-	Order order = null;
 
-	var strOrder = await _jSRuntime.InvokeAsync<string>("localStorage.getItem", cstrShoppingCard);
-	if (!string.IsNullOrWhiteSpace(strOrder))
-		order = JsonConvert.DeserializeObject<Order>(strOrder);
-	else
-	{
-		order = new Order();
-		await SetOrder(order);
-	}
-
-	foreach(var item in order.LineItems)
-	{
-		item.Product = _productRepository.GetProduct(item.ProductId);
-	}
-
-	return order;
-}
+Task<Order> GetOrderAsync();
+Task<Order> AddProductAsync(Product product);
+Task<Order> UpdateQuantityAsync(int productId, int quantity);
+Task<Order> UpdateOrderAsync(Order order);
+Task<Order> DeleteProductAsync(int productId);
+Task<Order> PlaceOrderAsync();
+Task SetOrder(Order order);
+Task EmptyAsync();
 
 
 46. Test Add Product to Cart Use Case
@@ -185,12 +174,29 @@ GetOrder():
 services.AddScoped<IShoppingCard, eShop.ShoppingCard.LocalStorage.ShoppingCard>();
 services.AddTransient<IAddProductToCardUseCase, AddProductToCardUseCase>();
 
+JavaSCript runtime:
+https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem
+https://blog.logrocket.com/localstorage-javascript-complete-guide/
+
+
+Microsoft.JSInterop Namespace: 
+-> Contains infrastructure for making method calls between .NET and JavaScript in Blazor applications.
+https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop?view=aspnetcore-5.0
+
+
+Local Storage: 
+https://www.youtube.com/watch?v=k8yJCeuP6I8&ab_channel=dcode
+https://www.youtube.com/watch?v=GihQAC1I39Q&t=593s&ab_channel=WebDevSimplified
+
+
+
 
 47. Improve UI Layout
 
 https://getbootstrap.com/docs/4.0/components/navbar/
 
 -- eShop.Web -> Shared -> TopNavBar.razor --
+-> copy + paste the navbar from Bootstrap
 -> put the TopNavBar.razor into MainLayout.razor
 
 
@@ -214,7 +220,7 @@ public Product Product{get;set;}
 
 48. View Shopping Cart Use Case
 
--- ShopingCardScreen -> ViewShoppingCardUseCase.cs --
+-- eShop.UseCases -> ShoppingCartScreen -> ViewShoppingCardUseCase.cs --
 
 -> ctor(IShoppingCard shoppingCard)
 -> Execute() : 
@@ -228,7 +234,7 @@ public Product Product{get;set;}
 -> we use AfterRendered()
 
 UI:
-@inject IViewShoppingCardUseCase viewShoppingCardUseCase
+@inject IViewShoppingCartUseCase viewShoppingCardUseCase
 
 @code{
 	private Order order;

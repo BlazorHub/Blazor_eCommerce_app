@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace eShop.ShoppingCard.LocalStorage
 {
-    public class ShoppingCard : IShoppingCard
+    public class ShoppingCart : IShoppingCart
     {
-        private const string cstrShoppingCard = "eShop.ShoppingCard";
+        private const string cstrShoppingCart = "eShop.ShoppingCard";
 
         private readonly IJSRuntime _jSRuntime;
         private readonly IProductRepository _productRepository;
 
-        public ShoppingCard(IJSRuntime jSRuntime, IProductRepository productRepository)
+        public ShoppingCart(IJSRuntime jSRuntime, IProductRepository productRepository)
         {
             _jSRuntime = jSRuntime;
             _productRepository = productRepository;
@@ -86,7 +86,7 @@ namespace eShop.ShoppingCard.LocalStorage
             Order order;
 
             // InvokeAsync : An instance of TValue obtained by JSON-deserializing the return value.
-            var strOrder = await _jSRuntime.InvokeAsync<string>("localStorage.getItem", cstrShoppingCard);
+            var strOrder = await _jSRuntime.InvokeAsync<string>("localStorage.getItem", cstrShoppingCart);
             if (!string.IsNullOrWhiteSpace(strOrder) && strOrder.ToLower() != "null")
                 order = JsonConvert.DeserializeObject<Order>(strOrder);
             else
@@ -108,7 +108,7 @@ namespace eShop.ShoppingCard.LocalStorage
             // InvokeVoidAsync(this IJSRuntime jsRuntime, string identifier, params object[] args);
 
             await _jSRuntime.InvokeVoidAsync("localStorage.setItem",
-                                             cstrShoppingCard,
+                                             cstrShoppingCart,
                                              JsonConvert.SerializeObject(order));
         }
 
