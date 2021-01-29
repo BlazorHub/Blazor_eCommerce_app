@@ -1,14 +1,14 @@
-﻿@if(LineItem != null && LineItem.Product !=null)
+﻿@if (LineItem != null && LineItem.Product != null)
 {
     <li class="row">
         <div class="col">
-            <img src="@LineItem.Product.ImageLink"/>
+            <img src="@LineItem.Product.ImageLink" />
         </div>
         <div class="col">
             <h5>@LineItem.Product.Name</h5>
             <div>
                 Quantity: &nbsp;&nbsp;
-                <input type="number" min="0" value="@LineItem.Quantity" @onchange="HandleQuantityChange"/>
+                <input type="number" min="0" value="@LineItem.Quantity" @onchange="HandleQuantityChange" />
             </div>
             <div>
                 Price: &nbsp;&nbsp; @LineItem.Product.Price.ToString("c");

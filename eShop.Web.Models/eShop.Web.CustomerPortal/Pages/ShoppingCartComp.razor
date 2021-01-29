@@ -1,6 +1,6 @@
-﻿@page "/card"
+﻿@page "/cart"
 
-@inject IViewShoppingCartUseCase viewShoppingCardUseCase
+@inject IViewShoppingCartUseCase viewShoppingCartUseCase
 
 <h3>Shopping Card</h3>
 <br />
@@ -10,7 +10,7 @@
         <div class="col-6">
             <ul>
                 @for (int i = 0; i < order.LineItems.Count; i++)
-                {
+                {                    
                     <LineItemComp LineItem="order.LineItems[i]" />
 
                     @if (i < order.LineItems.Count - 1)
@@ -29,9 +29,8 @@
 }
 else
 {
-    <p>There are no items in the shoping card</p>
+    <p>There are no items in the shopping card</p>
 }
-
 
 
 @code{
@@ -41,7 +40,7 @@ else
     {
         if (firstRender)
         {
-            order = await viewShoppingCardUseCase.Execute();
+            order = await viewShoppingCartUseCase.Execute();
             StateHasChanged();
         }
     }

@@ -229,12 +229,21 @@ public Product Product{get;set;}
 
 49. View Shopping Cart Component
 
+ShoppingcartComp	-> LineItemComp
+					-> OrderSummaryComp
+
+
 -> Shopping Card is implemented with localstorage, and localstorage is implementing JS interupt
 -> JS interupt can't be used with OnInitialized() because in Blazor Server is triggered twice
 -> we use AfterRendered()
 
 UI:
 @inject IViewShoppingCartUseCase viewShoppingCardUseCase
+
+@if (order != null && order.LineItems != null && order.LineItems.Count > 0)
+
+-> display <LineItemComp> using "for" or "foreach"
+-> <OrderSummaryComp>
 
 @code{
 	private Order order;
@@ -257,7 +266,7 @@ StateHasChanged():  Notifies the component that its state has changed.
 
 UI:
 -> check if the product is LineItem & LineItem.Product is not null
--> create a <li> with class row with 3 class colums
+-> create a <li> with class "row" with 3 class colums
 	-> Col 1 :  -> <img src="@LineItem.Product.ImageLink"/>
 	-> Col 2 :	-> @LineItem.Product.Name
 				-> @LineItem.Quantity
@@ -276,6 +285,8 @@ void DeleteProduct(int productId)
 
 UI:
 
+Create a Card Bootstrap: card, card-title, card-text
+
 -> create 4 <div> : -> nr of items				and price: @itemsCount, @itemsTotalPrice.ToString("c")			
 					-> shipping and handling	and price: 
 					-> estimated tax			and price:
@@ -290,7 +301,7 @@ double itemsTotalPrice = 0;
 [Parameter]
 public Order Order { get; set; }
 
-OnParametersSet()	: -> if Order is not null
+OnParametersSet()	:   -> if Order is not null
 						-> get the nr of products
 						-> reset the total price
 						-> get the total price with the new number of items
