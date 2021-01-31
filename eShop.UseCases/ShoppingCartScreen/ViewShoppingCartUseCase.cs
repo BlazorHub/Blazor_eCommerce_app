@@ -1,5 +1,6 @@
 ﻿using eShop.CoreBusiness.Models;
 using eShop.UseCases.PluginInterfaces.UI;
+using eShop.UseCases.ShoppingCartScreen.Interfaces;
 using System.Threading.Tasks;
 
 namespace eShop.UseCases.ShoppingCartScreen

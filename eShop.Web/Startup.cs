@@ -5,6 +5,7 @@ using eShop.UseCases.PluginInterfaces.StateStore;
 using eShop.UseCases.PluginInterfaces.UI;
 using eShop.UseCases.SearchProductScreen;
 using eShop.UseCases.ShoppingCartScreen;
+using eShop.UseCases.ShoppingCartScreen.Interfaces;
 using eShop.UseCases.ViewProductScreen;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,9 @@ namespace eShop.Web
             services.AddTransient<IViewProductUseCase, ViewProductUseCase>();
             services.AddTransient<ISearchProductUseCase, SearchProductUseCase>();
             services.AddTransient<IAddProductToCartUseCase, AddProductToCartUseCase>();
-            services.AddTransient<IViewShoppingCartUseCase, ViewShoppingCartUseCase>();   
+            services.AddTransient<IViewShoppingCartUseCase, ViewShoppingCartUseCase>();
+            services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
+            services.AddTransient<IUpdateQuantityUseCase, UpdateQuantityUseCase>();
             
         }
 

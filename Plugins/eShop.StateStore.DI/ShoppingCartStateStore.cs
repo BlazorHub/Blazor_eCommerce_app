@@ -13,7 +13,7 @@ namespace eShop.StateStore.DI
             _shoppingCart = shoppingCard;
         }
 
-        public async Task<int> GetItmesCount()
+        public async Task<int> GetItemsCount()
         {
             var order = await _shoppingCart.GetOrderAsync();
             if (order != null && order.LineItems != null && order.LineItems.Count > 0)
@@ -26,5 +26,11 @@ namespace eShop.StateStore.DI
         {
             BroadCastStateChange();
         }
+
+        // when the Quantity changes to 0, the itemCount need to change
+        public void UpdateProductQuantity()
+        {
+            BroadCastStateChange();
+        }     
     }
 }

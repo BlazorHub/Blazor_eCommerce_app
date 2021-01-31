@@ -20,14 +20,14 @@
         if (firstRender)
         {
             shoppingCardStateStore.AddStateChangeListeners(HandleShoppingCardStateChange);
-            lineItemsCount = await shoppingCardStateStore.GetItmesCount();
+            lineItemsCount = await shoppingCardStateStore.GetItemsCount();
             StateHasChanged();
         }
     }
 
     private async void HandleShoppingCardStateChange()
     {
-        lineItemsCount = await shoppingCardStateStore.GetItmesCount();
+        lineItemsCount = await shoppingCardStateStore.GetItemsCount();
         StateHasChanged();
     }
 
