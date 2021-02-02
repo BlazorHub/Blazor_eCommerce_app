@@ -385,3 +385,9 @@ Card: @lineItemsCount
 -> add a <NavLink> with href="card" 
 	-> add <CardComp/>
 	
+
+54. Delete Product and Update Quantity Use Cases
+
+-- eShop.UseCases -> ShoppingCartScreen -> DeleteProductUseCase.cs --
+
+-> 

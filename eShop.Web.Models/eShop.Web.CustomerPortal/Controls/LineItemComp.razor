@@ -14,7 +14,7 @@
                 <input type="number" min="0" value="@LineItem.Quantity" @onchange="HandleQuantityChange" />
             </div>
             <div>
-                Price: &nbsp;&nbsp; @LineItem.Product.Price.ToString("c");
+                Price: &nbsp;&nbsp; @LineItem.Product.Price.ToString("c")
             </div>
         </div>
         <div class="col">
@@ -33,12 +33,13 @@
     [Parameter]
     public EventCallback<Order> OnUpdateQuantity { get; set; }
 
-    async void HandleQuantityChange(ChangeEventArgs e)
+    public async void HandleQuantityChange(ChangeEventArgs e)
     {
         if (e.Value == null && string.IsNullOrWhiteSpace(e.Value.ToString()))
             return;
 
-        int qty = 0;
+        int qty;
+
         if (int.TryParse(e.Value.ToString(), out qty))
         {
             if (qty < 0)
@@ -50,9 +51,9 @@
         }
     }
 
-    async void DeleteProduct(int productId)
+    public async void DeleteProduct(int productId)
     {
         var order = await deleteProductUseCase.Execute(productId);
-        await OnDeleteProduct.InvokeAsync();
+        await OnDeleteProduct.InvokeAsync(order);
     }
 }

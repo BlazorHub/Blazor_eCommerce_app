@@ -47,13 +47,15 @@ else
         }
     }
 
+
+    //because is and EventCallBack we don't need to put StateHasChanged()
     private void HandleDeleteProduct(Order order)
     {
-        this.order = order;
+        this.order = order;       
     }
 
     private void HandleUpdateProduct(Order order)
     {
-        this.order = order;
+        this.order = order;       
     }
 }
