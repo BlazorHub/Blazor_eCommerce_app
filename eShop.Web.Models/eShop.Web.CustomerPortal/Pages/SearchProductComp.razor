@@ -30,7 +30,8 @@ else
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
+        
+        // get all the products
         products = searchRepo.Execute();
     }
 

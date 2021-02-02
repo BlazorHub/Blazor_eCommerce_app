@@ -390,4 +390,91 @@ Card: @lineItemsCount
 
 -- eShop.UseCases -> ShoppingCartScreen -> DeleteProductUseCase.cs --
 
--> 
+public async Task<Order> Execute(int productId)
+{
+    var order = await _shoppingCart.DeleteProductAsync(productId);
+    _shoppingCartStateStore.UpdateLineItemsCount();
+
+    return order;
+}
+
+
+-- eShop.UseCases.ShoppingCartScreen -> UpdateQuantityScreen.cs--
+
+public async Task<Order> Execute(int productId, int quantity)
+{
+    var order = await _shoppingCart.UpdateQuantityAsync(productId, quantity);
+    _shoppingCartStateStore.UpdateProductQuantity();							// manage the global state
+
+    return order;
+}
+
+
+55. Delete and Update with Order Line Item Component
+
+-- eShop.Web -> Startup.cs --
+
+services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
+services.AddTransient<IUpdateQuantityUseCase, UpdateQuantityUseCase>();
+
+
+-- eShop.Web.CustomerPortal -> Controls -> LineItemComp.razor --
+
+UI:
+
+@inject IDeleteProductUseCase deleteProductUseCase
+@inject IUpdateQuantityUseCase updateQuantityUseCase
+
+
+@code:
+[Parameter]
+public EventCallback<Order> OnDeleteProduct { get; set; }
+
+[Parameter]
+public EventCallback<Order> OnUpdateQuantity { get; set; }
+
+
+void Handle QuantityChange(ChangeEventArgs e)
+{
+	if (e.Value == null && string.IsNullOrWhiteSpace(e.Value.ToString()))
+        return;
+
+    int qty;
+
+    if (int.TryParse(e.Value.ToString(), out qty))
+    {
+        if (qty < 0)
+        {
+            return;
+        }
+        var order = await updateQuantityUseCase.Execute(LineItem.ProductId, qty);
+        await OnUpdateQuantity.InvokeAsync(order);
+    }
+}
+
+void DeleteProduct(int productid)
+{
+	var order = await deleteProductUseCase.Execute(productId);
+    await OnDeleteProduct.InvokeAsync(order);
+}
+
+
+-- eShop.Web.CustomerPortal -> Pages -> ShoppingCartComp.razor --
+
+UI:
+<LineItemComp LineItem="order.LineItems[i]"
+              OnDeleteProduct="HandleDeleteProduct"
+              OnUpdateQuantity="HandleUpdateProduct" />
+
+@code:
+
+//because is and EventCallBack we don't need to put StateHasChanged()
+private void HandleDeleteProduct(Order order)
+{
+    this.order = order;       
+}
+
+private void HandleUpdateProduct(Order order)
+{
+    this.order = order;       
+}
