@@ -3,18 +3,26 @@
 -> eShop.Web.Models		-> eShop.Web.AdminPortal
 						-> eShop.Web.Common
 						-> eShop.Web.CustomerPortal		-> Controls		-> CardComp.razor
+																		-> CustomerFormComp.razor
 																		-> LineItemComp.razor
 																		-> OrderSummaryComp.razor
 																		-> ProductCardComp.razor
 																		-> ProductItemComp.razor
 																
-														-> Pages		-> SearchBarComp.razor
+														-> Pages		-> OrderConfirmationComp.razor
+																		-> PlaceOrderComp.razor
+																		-> SearchBarComp.razor
 																		-> SearchProductComp.razor
 																		-> ShoppingCardComp.razor
 																		-> ViewProductComp.razor
+														
+														-> ViewModels	-> CustomerViewModel.cs
 	
 -> Plugins				-> eShop.DataStore								-> ProductRepository.cs
+																		-> OrderRepository
+
 						-> eShop.ShoppingCard.LocalStorage				-> ShoppingCard.cs		
+
 						-> eShop.StateStore.DI							-> ShoppingCardStateStore.cs
 																		-> StateStoreBase.cs
 
@@ -25,8 +33,12 @@
 						-> Services										-> IOrderService.cs
 																		-> OrderService.cs
 							
--> eShop.UseCases		-> PluginInterfaces				-> DataStore	-> IProductRepository.cs
-
+-> eShop.UseCases		-> OrderConfirmationScreen						-> IViewOrderConfirmationUseCase.cs
+																		-> ViewOrderConfirmationUseCase.cs
+						
+						-> PluginInterfaces				-> DataStore	-> IProductRepository.cs
+																		-> IOrderRepository.cs
+																		
 														-> StateStore	-> IShoppingCardStateStore.cs
 																		-> IStateStore.cs
 
@@ -35,8 +47,18 @@
 						-> SearchProductScreen							-> ISearchProductUseCases.cs 
 																		-> SearchProductUseCase.cs
 							
-						-> ShoppingCardScreen							-> IViewShoppingCardUseCase.cs
+						-> ShoppingCardScreen							-> IDeleteProductUseCase.cs																		
+																		-> DeleteProductUseCase.cs
+																		
+																		-> IPlaceOrderUseCases.cs
+																		-> PlaceOrderUseCases.cs
+																		
+																		-> IUpdateQuantityUseCase.cs
+																		-> UpdateQuantityUseCase.cs
+																		
+																		-> IViewShoppingCardUseCase.cs
 																		-> ViewShoppingCardUseCase.cs
+
 
 						-> ViewProductScreen			-> Interfaces	-> IAddProductToCardUseCase.cs
 																		-> IViewProductUseCase.cs
@@ -650,4 +672,51 @@ services.AddTransient<IOrderService, OrderService>();
 -- OrderSummaryComp.razor --
 
 -> create a [Parameter] so we can hide the Place Order button
+
+
+59. Order Confirmation Use Case and Screen
+
+-- eShop.UseCases.OrderConfirmationScreen --
+
+-> ViewOrderConfirmationUseCase.cs	: Order Execute(string uniqueId) => return _orderRepository.GetOrderByUniqueId(uniqueId);
+-> IViewOrderConfirmationUseCase.cs	: Order Execute(string uniqueId);
+
+
+-- Startup.cs --
+services.AddTransient<IViewOrderConfirmationUseCase, ViewOrderConfirmationUseCase>();
+
+
+-- eShop.Web.CustomerPortal-> Pages -> OrderConfirmationComp.razor --
+@page "/orderconfirm/{uniqueId}"
+
+UI: 
+
+<p>@order.CustomerName</p>
+<p>@order.CustomerAddress</p>
+<p>@order.CustomerCity</p>
+<p>@order.CustomerStateProvince</p>
+<p>@order.CustomerCountry</p>  
+<OrderSummaryComp Order="order" HidePlaceOrder="true"/>
+
+->create a table with : 
+
+<td>@item.Product.Name</td>
+<td>@item.Quantity</td>
+<td>@item.Product.Price</td>
+
+
+@code{
+	private Order order;
+
+	[Parameter]
+	public string UniqueId {get; set;}
+
+	protected override void OnParameterSet()
+	{
+		if(!string.IsNullOrWhiteSpace(UniqueId))
+		{
+			order = viewOrderConfirmationUseCase.Execute(UniqueId); // GetOrderByUniqueId() -> return order
+		}
+	}
+}
 

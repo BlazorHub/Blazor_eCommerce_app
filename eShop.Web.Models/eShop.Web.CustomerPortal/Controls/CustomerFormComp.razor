@@ -29,7 +29,7 @@
             <InputText id="country" @bind-Value="customer.CustomerCountry" class="form-control" />
         </div>
 
-        <button type="button" class="btn btn-primary">Place Order</button>
+        <button type="button" class="btn btn-primary" @onclick="HandleValidSubmit">Place Order</button>
     </EditForm>
 }
 

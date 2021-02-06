@@ -42,7 +42,8 @@
 
         var orderUniqueId = await placeOrderUseCases.Execute(order);
 
-        /*
+        /* .Execute(order):
+
             if (_orderService.ValidateCreateOrder(order))
             {
                 order.DatePlaced = DateTime.Now;

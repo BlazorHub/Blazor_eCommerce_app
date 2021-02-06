@@ -18,7 +18,6 @@ namespace eShop.UseCases.ShoppingCartScreen
             _shoppingCartStateStore = shoppingCartStateStore;
         }
 
-
         public async Task<Order> Execute(int productId)
         {
             var order = await _shoppingCart.DeleteProductAsync(productId);

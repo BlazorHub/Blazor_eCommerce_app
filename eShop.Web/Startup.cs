@@ -1,6 +1,7 @@
 using eShop.CoreBusiness.Services;
 using eShop.DataStore;
 using eShop.StateStore.DI;
+using eShop.UseCases.OrderConfirmationScreen;
 using eShop.UseCases.PluginInterfaces.DataStore;
 using eShop.UseCases.PluginInterfaces.StateStore;
 using eShop.UseCases.PluginInterfaces.UI;
@@ -46,6 +47,7 @@ namespace eShop.Web
             services.AddTransient<IUpdateQuantityUseCase, UpdateQuantityUseCase>();
             services.AddTransient<IPlaceOrderUseCases, PlaceOrderUseCases>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IViewOrderConfirmationUseCase, ViewOrderConfirmationUseCase>();
 
 
         }
