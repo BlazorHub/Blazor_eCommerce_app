@@ -111,6 +111,5 @@ namespace eShop.ShoppingCard.LocalStorage
                                              cstrShoppingCart,
                                              JsonConvert.SerializeObject(order));
         }
-
     }
 }

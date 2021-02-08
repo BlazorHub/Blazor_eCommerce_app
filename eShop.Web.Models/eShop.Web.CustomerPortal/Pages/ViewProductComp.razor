@@ -5,9 +5,7 @@
 @inject IViewProductUseCase viewProduct
 @inject IAddProductToCartUseCase addProductToCard
 
-
 @*Boostrap Card*@
-
 
 <h3>Product Details</h3>
 
@@ -31,7 +29,7 @@
 
 <br />
 
-<a href="/products" class="btn btn-primary">Back To List</a>
+<a href="/products" class="btn btn-primary" @onclick="BackToList">Back To List</a>
 
 
 @code{
@@ -54,4 +52,8 @@
         navManager.NavigateTo("/");
     }
 
+    private void BackToList()
+    {
+        navManager.NavigateTo("/");
+    }
 }

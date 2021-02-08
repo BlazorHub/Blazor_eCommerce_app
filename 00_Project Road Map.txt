@@ -1,0 +1,69 @@
+﻿
+Project Structure:
+-> eShop.Web.Models		-> eShop.Web.AdminPortal
+						-> eShop.Web.Common
+						-> eShop.Web.CustomerPortal		-> Controls		-> CardComp.razor
+																		-> CustomerFormComp.razor
+																		-> LineItemComp.razor
+																		-> OrderSummaryComp.razor
+																		-> ProductCardComp.razor
+																		-> ProductItemComp.razor
+																
+														-> Pages		-> OrderConfirmationComp.razor
+																		-> PlaceOrderComp.razor
+																		-> SearchBarComp.razor
+																		-> SearchProductComp.razor
+																		-> ShoppingCardComp.razor
+																		-> ViewProductComp.razor
+														
+														-> ViewModels	-> CustomerViewModel.cs
+	
+-> Plugins				-> eShop.DataStore								-> ProductRepository.cs
+																		-> OrderRepository
+
+						-> eShop.ShoppingCard.LocalStorage				-> ShoppingCard.cs		
+
+						-> eShop.StateStore.DI							-> ShoppingCardStateStore.cs
+																		-> StateStoreBase.cs
+
+-> eShop.CoreBusiness	-> Models										-> Order.cs
+																		-> OrderLineItems.cs
+																		-> Product.cs
+							
+						-> Services										-> IOrderService.cs
+																		-> OrderService.cs
+							
+-> eShop.UseCases		-> OrderConfirmationScreen						-> IViewOrderConfirmationUseCase.cs
+																		-> ViewOrderConfirmationUseCase.cs
+						
+						-> PluginInterfaces				-> DataStore	-> IProductRepository.cs
+																		-> IOrderRepository.cs
+																		
+														-> StateStore	-> IShoppingCardStateStore.cs
+																		-> IStateStore.cs
+
+														-> UI			-> IShoppingCard.cs
+
+						-> SearchProductScreen							-> ISearchProductUseCases.cs 
+																		-> SearchProductUseCase.cs
+							
+						-> ShoppingCardScreen							-> IDeleteProductUseCase.cs																		
+																		-> DeleteProductUseCase.cs
+																		
+																		-> IPlaceOrderUseCases.cs
+																		-> PlaceOrderUseCases.cs
+																		
+																		-> IUpdateQuantityUseCase.cs
+																		-> UpdateQuantityUseCase.cs
+																		
+																		-> IViewShoppingCardUseCase.cs
+																		-> ViewShoppingCardUseCase.cs
+
+
+						-> ViewProductScreen			-> Interfaces	-> IAddProductToCardUseCase.cs
+																		-> IViewProductUseCase.cs
+
+																		-> AddProductToCardUseCase.cs
+																		-> ViewProductUseCase.cs
+
+-> eShop.Web

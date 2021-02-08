@@ -83,7 +83,7 @@ AdditionalAssemblies="new[] { typeof(eShop.Web.CustomerPortal.Pages.ViewProductC
 -- eShop.CoreBusiness -> Models --
 
 Order.cs		: OrderID, DatePlaced, DateProcessing, DateProcessed, CustomerName, CustomerAddress, 
-				  CustomerCity, CustomerStateProvince, CustomerCountry, AdminUser, 
+				  CustomerCity, CustomerStateProvince, CustomerCountry, AdminUser
 			      List<OrderLineItem> LineItems, UniqueId
 
 				  List<OrderLineItem> LineItems : each LineItems has a item in it
@@ -107,15 +107,15 @@ OrderLineItem.cs: LineItemId, ProductId, Price, Quantity, OrderId, Product
 
 -- eShop.UseCases -> PluginIntefaces -> UI -> IShoppingCard.cs --
 
--> we make it Async because we use JSRuntime, which is a async 
+-> we make it Async because we use JSRuntime, which is async 
 -> get, add, update, delete order/product from/to LocalStorage
 
 Task<Order> GetOrderAsync();
-Task<Order> AddProductAsync();
+Task<Order> AddProductAsync(Product product);
 Task<Order> UpdateQuantityAsync(int productId, int quantity);
 Task<Order> UpdateOrderAsync(Order order);
 Task<Order> DeleteProductAsync(int productId);
-Task<Order> PlaceOrderAsync();
+Task<Order> PlaceOrderAsync();        
 Task EmptyAsync();
 
 
@@ -146,7 +146,7 @@ UI:
 
 @code:
 -> add product to card
--> navigate to the CatalogPage
+-> navigate back to the CatalogPage
 
 
 45. Implementing Shopping Cart Plugin
@@ -209,8 +209,6 @@ https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop?view=aspnetcore-
 Local Storage: 
 https://www.youtube.com/watch?v=k8yJCeuP6I8&ab_channel=dcode
 https://www.youtube.com/watch?v=GihQAC1I39Q&t=593s&ab_channel=WebDevSimplified
-
-
 
 
 47. Improve UI Layout

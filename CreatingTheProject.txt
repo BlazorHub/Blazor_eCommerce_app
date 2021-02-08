@@ -1,0 +1,49 @@
+﻿-> Create a the road map
+-> add Assembly for CustomerProtal
+-> SearchProductUseCase.cs, ISearchProductUseCase.cs
+-> ViewProductUseCase.cs, IViewProductUseCase.cs
+-> ProductRepository.cs, IProductReository.cs
+-> SearchProduct.razor
+-> SearchBar.razor			: Form Bootstrap
+-> ProductItemComp.razor	: Card Bootstrap
+-> ViewProduct.razor		: Card + Button(Add to Cart) + Button(Back to List)
+
+-> Order.cs				:    AddProduct(int productId, int qty, double price), RemoveProduct(int productId)
+-> OrderLineItem.cs		
+-> OrderService.cs		:
+-> IOrderService.cs		:   bool ValidateCustomerInformation(string name, string address, string city, string province, string country);
+                            bool ValidateCreateOrder(Order order);  
+                                -> order has exist
+                                -> order has to have order line items
+                                -> validationg line items
+                                -> validate customer info
+                            bool ValidateProcessOrder(Order order);
+                            bool ValidateUpdateOrder(Order order);
+                                -> order has to exist
+                                -> order has to have order line items
+                                -> Placed Date has to be populate
+                                -> validate uniqueId
+                                -> validation line items
+                                -> validate customer info
+-> IShoppingCart(43)
+-> ShoppingCart (45):
+
+Task<Order> GetOrderAsync() :                                   
+    -> get the Product from localStorage     
+    -> add the Product
+    -> set the Order to the localStorage
+
+Task<Order> AddProductAsync(Product product);
+    -> 
+
+Task<Order> UpdateQuantityAsync(int productId, int quantity);
+Task<Order> UpdateOrderAsync(Order order);
+Task<Order> DeleteProductAsync(int productId);
+Task<Order> PlaceOrderAsync();        
+Task EmptyAsync();
+
+Task<Order> GetOrder()
+Task SetOrder(Order order)
+
+-> IAddProductToCardUseCase.cs(44)  -> inject interface to ViewProductComp.razor 
+-> AddProductToCardUseCase.cs       -> get the Product, add product to the ShoppingCart

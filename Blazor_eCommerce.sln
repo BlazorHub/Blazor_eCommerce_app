@@ -23,7 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShop.Web.CustomerPortal", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Notes", "_Notes", "{79EDB32E-8133-4412-B11C-65841FB476D5}"
 	ProjectSection(SolutionItems) = preProject
+		00_Project Road Map.txt = 00_Project Road Map.txt
+		..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\01_Getting Started.txt = ..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\01_Getting Started.txt
+		..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\02_e-Commerce App.txt = ..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\02_e-Commerce App.txt
+		..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\03_Blazor In-Depth.txt = ..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\03_Blazor In-Depth.txt
+		..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\04_Dependency Injection.txt = ..\Blazor_eCommerce_Basics\eCommerce_UI\Notes\04_Dependency Injection.txt
 		Notes\05_Build Customer Portal.txt = Notes\05_Build Customer Portal.txt
+		CreatingTheProject.txt = CreatingTheProject.txt
 		TypeOfArhitecture.txt = TypeOfArhitecture.txt
 	EndProjectSection
 EndProject
