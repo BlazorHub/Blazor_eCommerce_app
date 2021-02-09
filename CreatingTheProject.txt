@@ -28,22 +28,44 @@
 -> IShoppingCart(43)
 -> ShoppingCart (45):
 
-Task<Order> GetOrderAsync() :                                   
-    -> get the Product from localStorage     
-    -> add the Product
-    -> set the Order to the localStorage
+        Task<Order> GetOrderAsync() :                                   
+            -> get the Product from localStorage     
+            -> add the Product
+            -> set the Order to the localStorage
 
-Task<Order> AddProductAsync(Product product);
-    -> 
+        Task<Order> AddProductAsync(Product product);
+            -> 
 
-Task<Order> UpdateQuantityAsync(int productId, int quantity);
-Task<Order> UpdateOrderAsync(Order order);
-Task<Order> DeleteProductAsync(int productId);
-Task<Order> PlaceOrderAsync();        
-Task EmptyAsync();
+        Task<Order> UpdateQuantityAsync(int productId, int quantity);
+        Task<Order> UpdateOrderAsync(Order order);
+        Task<Order> DeleteProductAsync(int productId);
+        Task<Order> PlaceOrderAsync();        
+        Task EmptyAsync();
 
-Task<Order> GetOrder()
-Task SetOrder(Order order)
+        Task<Order> GetOrder()
+        Task SetOrder(Order order)
+
 
 -> IAddProductToCardUseCase.cs(44)  -> inject interface to ViewProductComp.razor 
 -> AddProductToCardUseCase.cs       -> get the Product, add product to the ShoppingCart
+
+-> TopNavBar.razor(47)
+-> rename ProductItemComp.razor to ProductCardComp.razor
+
+-> ViewShoppingCardUseCase.cs (48)
+
+-> ShoppingcartComp.razor (49) : make it all with class="row" and class="col"
+    -> LineItemComp.razor (50)
+    -> OrderSummaryComp.razor(51)
+
+-> IStateStore.cs(54)
+    void AddStateChangeListeners(Action listener)
+    void RemoveStateChangeListeners(Action listener)
+    void BroadCastStateChange(Action listener)
+
+-> ShoppingCartStateStore.cs
+-> IShoppingCartStateStore.cs
+Task<int> GetItemsCount()
+void UpdateLineItemsCount()
+
+-> AddProductToCardUseCases.cs (add IShoppingCartStateStore)

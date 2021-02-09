@@ -67,7 +67,7 @@
         {
             itemCount = Order.LineItems.Count;
             itemTotalPrice = 0;
-            Order.LineItems.ForEach(x => itemTotalPrice = x.Price * x.Quantity);
+            Order.LineItems.ForEach(x => itemTotalPrice += x.Price * x.Quantity);
         }
     }
 

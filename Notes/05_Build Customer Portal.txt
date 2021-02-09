@@ -224,7 +224,7 @@ https://getbootstrap.com/docs/4.0/components/navbar/
 -> delete: Index.razor, Counter.razor, FetchData.razor
 
 
--- eShop.Web.CustomerPortal-> Controls -> ProductCardComp.razor --
+-- eShop.Web.CustomerPortal-> Controls -> ProductCartComp.razor --
 
 UI:
 https://getbootstrap.com/docs/4.0/components/card/
@@ -235,7 +235,7 @@ public Product Product{get;set;}
 
 -- eShop.Web.CustomerPortal -> Pages -> SearchProductComp.razor --
 -> delete the table
--> use the ProductCardComponent to display the prducts
+-> use the ProductCardComponent to display the products
 
 
 48. View Shopping Cart Use Case
@@ -256,6 +256,7 @@ ShoppingcartComp	-> LineItemComp
 -> Shopping Card is implemented with localstorage, and localstorage is implementing JS interupt
 -> JS interupt can't be used with OnInitialized() because in Blazor Server is triggered twice
 -> we use AfterRendered()
+-> if we call a method of type Task inside of our method, our method need to be Async : AfterRendered()
 
 UI:
 @inject IViewShoppingCartUseCase viewShoppingCardUseCase
@@ -305,7 +306,7 @@ void DeleteProduct(int productId)
 
 UI:
 
-Create a Card Bootstrap: card, card-title, card-text
+Create a Card Bootstrap: card, card-title, card-text, Flex
 
 -> create 4 <div> : -> nr of items				and price: @itemsCount, @itemsTotalPrice.ToString("c")			
 					-> shipping and handling	and price: 
