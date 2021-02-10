@@ -58,14 +58,21 @@
     -> LineItemComp.razor (50)
     -> OrderSummaryComp.razor(51)
 
--> IStateStore.cs(54)
+-> IStateStore.cs(52)
     void AddStateChangeListeners(Action listener)
     void RemoveStateChangeListeners(Action listener)
     void BroadCastStateChange(Action listener)
 
--> ShoppingCartStateStore.cs
 -> IShoppingCartStateStore.cs
-Task<int> GetItemsCount()
-void UpdateLineItemsCount()
+-> ShoppingCartStateStore.cs
+    Task<int> GetItemsCount()
+    void UpdateLineItemsCount()
 
 -> AddProductToCardUseCases.cs (add IShoppingCartStateStore)
+
+-> CardComp.razor(53)
+
+-> DeleteProductUseCase.cs(54)
+-> UpdateQuantityScreen.cs
+
+-> LineItemComp.razor(55) -> add DeleteProductUseCase, UpdateQuantityScreen to the comp

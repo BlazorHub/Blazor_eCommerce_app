@@ -342,7 +342,7 @@ INTERFACES
 -- IStateStore.cs --
 void AddStateChangeListeners(Action listener)
 void RemoveStateChangeListeners(Action listener)
-void BroadCastStateChange(Action listener)
+void BroadCastStateChange(Action listener)			
 
 -- IShoppingCardStateStore.cs : IStateStore --
 Task<int> GetItemsCount()
@@ -379,6 +379,9 @@ void BroadCastStateChange(Action listener)
 
 services.AddScoped<IShoppingCardStateStore, ShoppingCardStateStore>();
 
+Dictionary:
+Action.Invoke() -> Encapsulates a method that has no parameters and does not return a value.
+
 
 53. Shopping Cart Items Count Component
 
@@ -392,13 +395,16 @@ Card: @lineItemsCount
 
 @code
 -> create a prop that contains the nr of items
+
 -> OnAfterRenderAsync()
 	-> AddStateChangeListeners(HandleShoppingCardStateChange); 
 	-> GetItmesCount();
 	-> StateHasChanged();
+
 -> HandleShoppingCardStateChange()
 	-> GetItmesCount();
 	-> StateHasChanged();
+
 -> Dispose()
 	-> RemoveStateChangeListeners(HandleShoppingCardStateChange);
 
@@ -420,7 +426,7 @@ public async Task<Order> Execute(int productId)
 }
 
 
--- eShop.UseCases.ShoppingCartScreen -> UpdateQuantityScreen.cs--
+-- eShop.UseCases.ShoppingCartScreen -> UpdateQuantityUseCase.cs--
 
 public async Task<Order> Execute(int productId, int quantity)
 {
