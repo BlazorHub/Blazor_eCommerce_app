@@ -11,7 +11,7 @@ namespace eShop.CoreBusiness.Models
             LineItems = new List<OrderLineItem>();
         }
 
-        public int? OrderId { get; set; }
+        public int? OrderId { get; set; }                   // the number of the Order
         public DateTime? DatePlaced { get; set; }
         public DateTime? DateProcessing { get; set; }
         public DateTime? DateProcessed { get; set; }
@@ -21,8 +21,8 @@ namespace eShop.CoreBusiness.Models
         public string CustomerStateProvince { get; set; }
         public string CustomerCountry { get; set; }
         public string AdminUser { get; set; }       
-        public List<OrderLineItem> LineItems { get; set; } // each line Item will have a product in it
-        public string UniqueId { get; set; }
+        public List<OrderLineItem> LineItems { get; set; }  // each line Item will have a product in it
+        public string UniqueId { get; set; }                // primary key of the Order
 
         public void AddProduct(int productId, int qty, double price)
         {

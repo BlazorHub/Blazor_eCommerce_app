@@ -16,6 +16,7 @@ namespace eShop.DataStore
 
         public int CreateOrder(Order order)
         {
+
             order.OrderId = orders.Count + 1;            
             orders.Add(order.OrderId.Value, order);
             return order.OrderId.Value;             // return the id of the order 
@@ -39,8 +40,8 @@ namespace eShop.DataStore
             //    if (order.UniqueId == uniqueId)
             //        return order;
 
-            foreach (var order in orders)
-                if (order.Value.UniqueId == uniqueId)
+            foreach (var order in orders)              // look in all the orders
+                if (order.Value.UniqueId == uniqueId)  // and find the order with the UniqueKey
                     return order.Value;                // order is of type Order
 
             return null;
@@ -54,8 +55,9 @@ namespace eShop.DataStore
         public IEnumerable<Order> GetOutstadingOrders()
         {
             // convert from Dictionary<int, Order> to a List<Order>
+
             var allOrders = (IEnumerable<Order>)orders.Values;
-            return allOrders.Where(x => x.DateProcessed.HasValue == false);
+            return allOrders.Where(x => x.DateProcessed.HasValue == false); // is NULL or has Value
         }
 
         public IEnumerable<Order> GetProcessedOrders()
@@ -66,9 +68,11 @@ namespace eShop.DataStore
 
         public void UpdateOrder(Order order)
         {
-            // orders[order.OrderId.Value] == null ??? orders in the database ???
+            // orders[order.OrderId.Value] == null   ??? orders in the database ???
+            // !order.OrderId.HasValue              : the order ID has no value but the other can have fields have
+            // orders[order.OrderId.Value] == null  : all the fields are null, the object is not instantiated
 
-            if (order == null || !order.OrderId.HasValue || orders[order.OrderId.Value] == null)
+            if (order == null || !order.OrderId.HasValue || orders[order.OrderId.Value] == null) 
                 return;
 
             orders[order.OrderId.Value] = order;

@@ -75,4 +75,18 @@
 -> DeleteProductUseCase.cs(54)
 -> UpdateQuantityScreen.cs
 
--> LineItemComp.razor(55) -> add DeleteProductUseCase, UpdateQuantityScreen to the comp
+-> LineItemComp.razor(55) -> add DeleteProductUseCase, UpdateQuantityScreen to the component 
+
+-> IOrderRepository.cs (56)
+-> OrderRepository.cs
+
+-> PlaceOrderUseCase.cs(57)
+-> IPlaceOrderUseCase.cs
+
+-> PlaceOrderComp.razor(58)
+-> CustomerViewModel.cs
+-> CustomerFormComp.razor
+
+-> ViewOrderConfirmationUseCase.cs
+-> IViewOrderConfirmationUseCase.cs
+-> OrderConfirmationComp.razor 

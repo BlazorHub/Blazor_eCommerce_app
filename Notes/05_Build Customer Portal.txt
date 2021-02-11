@@ -524,13 +524,14 @@ IEnumerable<Order> GetProcessedOrders();
 
 IEnumerable<OrderLineItem> GetLineItemsByOrderId(int orderId);
 
+
 Dictionary:
 
 IEnumerable<> vs List<> vs Array[]:
 https://stackoverflow.com/questions/3628425/ienumerable-vs-list-what-to-use-how-do-they-work
 
 return orders.Values;
-Values : Gets a collection containing the values in the System.Collections.Generic.Dictionary`2.
+Values : Gets a collection containing the values in the System.Collections.Generic.Dictionary`2
 
 
 57. Place Order Use Case
@@ -569,8 +570,9 @@ Task<string> Execute(Order order);
 
 -> PlaceOrderUseCases.cs
 -> PlaceOrderComp.razor
+
 -> CustomerViewModel.cs
--> CustomerFormComp.cs
+-> CustomerFormComp.razor
 
 
 -- eShop.Web.CustomerPortal -> Pages -> PlaceOrdercomp.razor --
