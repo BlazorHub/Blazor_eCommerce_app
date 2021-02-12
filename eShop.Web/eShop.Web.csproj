@@ -7,6 +7,8 @@
   <ItemGroup>
     <ProjectReference Include="..\eShop.CoreBusiness\eShop.CoreBusiness.csproj" />
     <ProjectReference Include="..\eShop.UseCases\eShop.UseCases.csproj" />
+    <ProjectReference Include="..\eShop.Web.Models\eShop.Web.AdminPortal\eShop.Web.AdminPortal.csproj" />
+    <ProjectReference Include="..\eShop.Web.Models\eShop.Web.Common\eShop.Web.Common.csproj" />
     <ProjectReference Include="..\eShop.Web.Models\eShop.Web.CustomerPortal\eShop.Web.CustomerPortal.csproj" />
     <ProjectReference Include="..\Plugins\eShop.DataStore\eShop.DataStore.csproj" />
     <ProjectReference Include="..\Plugins\eShop.ShoppingCard.LocalStorage\eShop.ShoppingCard.LocalStorage.csproj" />

@@ -1,9 +1,13 @@
 ﻿@implements IDisposable
 
+@inject NavigationManager navigationManager
+
 @inject IShoppingCartStateStore shoppingCardStateStore
 
 <div>
-    Card: &nbsp; @lineItemsCount
+    <a class ="nav-link" href="/cart">
+        Card: &nbsp; @lineItemsCount
+    </a>
 </div>
 
 
@@ -29,5 +33,10 @@
     public void Dispose()
     {
         shoppingCardStateStore.RemoveStateChangeListeners(HandleShoppingCardStateChange);
+    }
+
+    public void NavigateToCart()
+    {
+        navigationManager.NavigateTo("/cart");
     }
 }
