@@ -57,13 +57,13 @@ namespace eShop.DataStore
             // convert from Dictionary<int, Order> to a List<Order>
 
             var allOrders = (IEnumerable<Order>)orders.Values;
-            return allOrders.Where(x => x.DateProcessed.HasValue == false); // is NULL or has Value
+            return allOrders.Where(x => x.DateProcessed.HasValue == false); // is NULL 
         }
 
         public IEnumerable<Order> GetProcessedOrders()
         {
             var allOrders = (IEnumerable<Order>)orders.Values;
-            return allOrders.Where(x => x.DateProcessed.HasValue);
+            return allOrders.Where(x => x.DateProcessed.HasValue == true); // is not NULL
         }
 
         public void UpdateOrder(Order order)

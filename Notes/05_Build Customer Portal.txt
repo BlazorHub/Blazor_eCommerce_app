@@ -698,11 +698,7 @@ services.AddTransient<IViewOrderConfirmationUseCase, ViewOrderConfirmationUseCas
 
 UI: 
 
-<p>@order.CustomerName</p>
-<p>@order.CustomerAddress</p>
-<p>@order.CustomerCity</p>
-<p>@order.CustomerStateProvince</p>
-<p>@order.CustomerCountry</p>  
+-> create 5 <p> with : CustomerName, CustomerAddress, CustomerCity, CustomerStateProvince, CustomerCountry
 <OrderSummaryComp Order="order" HidePlaceOrder="true"/>
 
 ->create a table with : 
@@ -726,4 +722,27 @@ UI:
 		}
 	}
 }
+
+
+60. Admin Use Cases
+
+eShop.UseCases.AdminPortal.OrderDetailScreen
+
+-> ViewOrderDetailUseCase.cs		: Execute(int orderId) -> GetOrder(orderId);
+-> IViewOrderDetailUseCase.cs
+-> ProcessOrderUseCase.cs			: 
+-> IProcessOrderUseCase.cs
+
+eShop.UseCases.AdminPortal.OutStandingOrdersScreen
+
+-> ViewOutstandingOrdersUseCase
+-> IViewOutstandingOrdersUseCase
+
+eShop.UseCases.AdminPortal.ProcessedOrdersScreen
+
+-> ViewProcessedOrdersUseCase
+-> IViewProcessedOrdersUseCase
+
+
+61. Admin Portal Screens
 

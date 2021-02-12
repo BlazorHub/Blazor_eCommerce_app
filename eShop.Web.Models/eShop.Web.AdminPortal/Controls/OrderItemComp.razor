@@ -1,0 +1,17 @@
+﻿@if (Order != null)
+{
+    <tr>
+        <td>
+            @if (Order.DatePlaced.HasValue)
+            {
+                @Order.DatePlaced.Value.ToString("yyyy-MM-dd")
+            }
+        </td>
+
+    </tr>
+}
+
+@code{
+    [Parameter]
+    public Order Order { get; set; }
+}

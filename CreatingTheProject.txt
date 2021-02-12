@@ -90,3 +90,12 @@
 -> ViewOrderConfirmationUseCase.cs
 -> IViewOrderConfirmationUseCase.cs
 -> OrderConfirmationComp.razor 
+
+-> ViewOutstandingOrdersUseCase (60)
+-> IViewOutstandingOrdersUseCase
+
+-> ViewOrderDetailUseCase
+-> IViewOrderDetailUseCase
+
+-> ProcessOrderUseCase
+-> IProcessOrderUseCase
